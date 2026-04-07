@@ -14,9 +14,26 @@ import Observation
 class AppState {
 
     var lights: [LightViewModel] = []
+    var discoveredLights: [LightViewModel] = []
     var isScanning: Bool = false
 
     static let shared = AppState()
+
+    /// Called from AppDelegate when a new light is discovered during scan
+    func addDiscoveredLight(_ device: NeewerLight) {
+        let id = device.identifier
+        guard !lights.contains(where: { $0.device.identifier == id }) else { return }
+        guard !discoveredLights.contains(where: { $0.device.identifier == id }) else { return }
+        discoveredLights.append(LightViewModel(device: device))
+    }
+
+    /// Move a discovered light to the connected lights list
+    func connectDiscoveredLight(_ light: LightViewModel) {
+        discoveredLights.removeAll { $0.id == light.id }
+        if !lights.contains(where: { $0.id == light.id }) {
+            lights.append(light)
+        }
+    }
 
     func addLight(_ device: NeewerLight) {
         guard !lights.contains(where: { $0.device.identifier == device.identifier }) else { return }

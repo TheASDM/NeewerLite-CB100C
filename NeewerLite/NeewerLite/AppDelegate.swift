@@ -977,6 +977,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMenuDele
                             peripheral, characteristic1, characteristic2)
                         scanningViewObjects.append(DeviceViewObject(light))
                         light.startLightOnNotify()
+                        AppState.shared.addDiscoveredLight(light)
                         update = true
                     }
                 }
