@@ -168,7 +168,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMenuDele
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         // Hide the window and remove from Dock instead of closing
         sender.orderOut(nil)
-        NSApp.setActivationPolicy(.accessory)
+        // Only go accessory mode if no other windows are visible
+        if swiftUIWindow?.isVisible != true && window?.isVisible != true {
+            NSApp.setActivationPolicy(.accessory)
+        }
         return false
     }
 
@@ -720,6 +723,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMenuDele
         win.title = "NeewerLite"
         win.contentView = hostingView
         win.center()
+        win.delegate = self
         win.makeKeyAndOrderFront(nil)
         win.isReleasedWhenClosed = false
         swiftUIWindow = win
