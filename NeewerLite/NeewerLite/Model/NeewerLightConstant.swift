@@ -211,7 +211,7 @@ class NeewerLightConstant {
             case "20230025":
                 return "RGB1200"
             case "20240014":
-                return "RGB1200"
+                return "RGB1200(III)"
             case "20230031":
                 return "TL120C"
             case "20230050":
@@ -590,7 +590,9 @@ class NeewerLightConstant {
                 } else if nickName.contains("RGB168") {
                     lightType = 16
                 }
-                if nickName.contains("RGB1200") {
+                if nickName.contains("RGB1200(III)") {
+                    lightType = 87
+                } else if nickName.contains("RGB1200") {
                     lightType = nickName.contains("20230025") ? 43 : 18
                 } else if nickName.contains("CL124 RGB(II)") {
                     lightType = 56
