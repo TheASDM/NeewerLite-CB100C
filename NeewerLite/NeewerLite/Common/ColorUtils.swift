@@ -78,7 +78,7 @@ func rgb2hsv(_ rgb: RGB) -> HSB {
 
     let dVal: CGFloat = maxV - minV
 
-    sVal = maxV == 0 ? 0 : dVal / minV
+    sVal = maxV == 0 ? 0 : dVal / maxV
 
     if maxV == minV {
         hVal = 0

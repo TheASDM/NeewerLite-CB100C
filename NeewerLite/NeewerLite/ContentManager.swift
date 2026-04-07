@@ -178,16 +178,14 @@ class ContentManager {
     public func loadDatabaseFromDisk(reload: Bool = false) {
         if databaseCache == nil || reload {
             do {
-                #if DEBUG
-                    // Try to load from resources in debug build
-                    if let resourceURL = Bundle.main.url(
-                        forResource: "lights", withExtension: "json")
-                    {
-                        let data = try Data(contentsOf: resourceURL)
-                        databaseCache = try JSONDecoder().decode(Database.self, from: data)
-                        return
-                    }
-                #endif
+                // Try to load from bundled resources first
+                if let resourceURL = Bundle.main.url(
+                    forResource: "lights", withExtension: "json")
+                {
+                    let data = try Data(contentsOf: resourceURL)
+                    databaseCache = try JSONDecoder().decode(Database.self, from: data)
+                    return
+                }
                 // Fallback to local cache file
                 if fileManager.fileExists(atPath: localDatabaseURL.path) {
                     let data = try Data(contentsOf: localDatabaseURL)

@@ -58,7 +58,7 @@ struct CommandParameter {
 
     func HUE() -> Int? {
         if let val = components.queryItems?.first(where: { $0.name == "HUE" })?.value {
-            let valInt = Int(val)!
+            guard let valInt = Int(val) else { return nil }
             return valInt
         }
         return nil
@@ -66,7 +66,7 @@ struct CommandParameter {
 
     func CCT() -> Int {
         if let val = components.queryItems?.first(where: { $0.name == "CCT" })?.value {
-            let valInt = Int(val)!
+            guard let valInt = Int(val) else { return 3200 }
             return valInt
         }
         return 3200
@@ -74,7 +74,7 @@ struct CommandParameter {
 
     func GMM() -> Int {
         if let val = components.queryItems?.first(where: { $0.name == "GM" })?.value {
-            let valInt = Int(val)!
+            guard let valInt = Int(val) else { return 0 }
             return valInt
         }
         return 0

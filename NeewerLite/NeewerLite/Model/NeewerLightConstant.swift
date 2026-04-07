@@ -60,9 +60,9 @@ class NeewerLightConstant {
         return false
     }
 
-    class func CCTRange(ligthType: UInt8, projectName: String) -> (minCCT: Int, maxCCT: Int) {
+    class func CCTRange(lightType: UInt8, projectName: String) -> (minCCT: Int, maxCCT: Int) {
         // Default CCT range from 3200k–5600k
-        if ligthType == 6 {
+        if lightType == 6 {
             if projectName.contains("SL140") {
                 // https://neewer.com/products/neewer-sl-140-rgb-led-light-full-color-rechargeable-pocket-size-10097200?_pos=2&_sid=3ff26da17&_ss=r
                 return (minCCT: 25, maxCCT: 90)
@@ -558,14 +558,12 @@ class NeewerLightConstant {
                 lightType = 83
                 return lightType
             }
-            if !nickName.contains("T100C-2") {
-                if nickName.contains("TL40-2") {
-                    lightType = 86
-                }
+            if nickName.contains("TL40-2") {
+                lightType = 86
+            } else if !nickName.contains("T100C-2") {
                 lightType = 0
             }
 
-            lightType = 0
             return lightType
         }
 

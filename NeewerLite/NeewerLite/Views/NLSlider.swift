@@ -23,7 +23,7 @@ class NLSlider: NSView {
 
     var minValue: CGFloat = 0.0 {
         didSet {
-            if currentValue > minValue {
+            if currentValue < minValue {
                 currentValue = minValue
             }
             if needUpperBound {
@@ -36,7 +36,7 @@ class NLSlider: NSView {
 
     var maxValue: CGFloat = 100.0 {
         didSet {
-            if currentValue < maxValue {
+            if currentValue > maxValue {
                 currentValue = maxValue
             }
             if needUpperBound {
@@ -160,7 +160,7 @@ class NLSlider: NSView {
         }
         self.willChangeValue(forKey: "currentUpperValue")
         if let safeCallback = callback {
-            safeCallback(currentValue)
+            safeCallback(currentUpperValue)
         }
         self.didChangeValue(forKey: "currentUpperValue")
     }

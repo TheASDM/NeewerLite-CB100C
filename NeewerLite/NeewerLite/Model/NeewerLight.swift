@@ -189,7 +189,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
                 return true
             }
         }
-        if let item = ContentManager.shared.fetchLightProperty(lightType: self.ligthType)
+        if let item = ContentManager.shared.fetchLightProperty(lightType: self.safeType)
         {
             if item.supportCCTGM ?? false
             {
@@ -212,14 +212,15 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
     func CCTRange() -> (minCCT: Int, maxCCT: Int) {
         if let pattern = findCommandPatternFromDB("cct") {
             if pattern.contains("cct:") {
-                let regex = try! NSRegularExpression(pattern: #"\{cct:[^:}]+:range\((\d+),\s*(\d+)\)\}"#, options: [])
-                let nsrange = NSRange(pattern.startIndex..<pattern.endIndex, in: pattern)
-                if let match = regex.firstMatch(in: pattern, options: [], range: nsrange),
-                let minRange = Range(match.range(at: 1), in: pattern),
-                let maxRange = Range(match.range(at: 2), in: pattern),
-                let min = Int(pattern[minRange]),
-                let max = Int(pattern[maxRange]) {
-                    return (min, max)
+                if let regex = try? NSRegularExpression(pattern: #"\{cct:[^:}]+:range\((\d+),\s*(\d+)\)\}"#, options: []) {
+                    let nsrange = NSRange(pattern.startIndex..<pattern.endIndex, in: pattern)
+                    if let match = regex.firstMatch(in: pattern, options: [], range: nsrange),
+                    let minRange = Range(match.range(at: 1), in: pattern),
+                    let maxRange = Range(match.range(at: 2), in: pattern),
+                    let min = Int(pattern[minRange]),
+                    let max = Int(pattern[maxRange]) {
+                        return (min, max)
+                    }
                 }
             }
         }
@@ -230,7 +231,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
                 return (item.cctRange!.min, item.cctRange!.max)
             }
         }
-        return NeewerLightConstant.CCTRange(ligthType: _lightType, projectName: projectName)
+        return NeewerLightConstant.CCTRange(lightType: _lightType, projectName: projectName)
     }
 
     var deviceName: String {
@@ -296,7 +297,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
         return _macAddress ?? ""
     }
 
-    private lazy var ligthType: UInt8 = {
+    private lazy var safeType: UInt8 = {
         if _lightType <= 0 {
             _lightType = NeewerLightConstant.getLightType(nickName: nickName, rawname: _rawName ?? "", projectName: projectName)
         }
@@ -312,7 +313,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
         Logger.debug(" identifier: \(identifier)")
         Logger.debug("projectName: \(projectName)")
         Logger.debug("   nickName: \(nickName)")
-        Logger.debug("  ligthType: \(ligthType)")
+        Logger.debug("  safeType: \(safeType)")
     }
 
     func getConfig(_ intrinsicOnly: Bool = false) -> [String: CodableValue] {
@@ -392,7 +393,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
         Logger.debug("     identifier: \(identifier)")
         Logger.debug("    projectName: \(projectName)")
         Logger.debug("       nickName: \(nickName)")
-        Logger.debug("      ligthType: \(ligthType)")
+        Logger.debug("      safeType: \(safeType)")
         Logger.debug("    supportedFX: \(supportedFX)")
         Logger.debug("supportedSource: \(supportedSource)")
     }
@@ -429,7 +430,6 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
     }
 
     func sendKeepAlive(_ cbm: CBCentralManager?) {
-        return
         guard let peripheral = self.peripheral else {
             return
         }
@@ -869,7 +869,8 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
          CMD  TAG  SIZE       MAC                     SUB_TAG  PowerOff    (checksum)
          78   8D   08         (F7 AC 16 F1 58 96)     81       02          28
          */
-        let bArr1: [UInt8] = composeSingleCommandWithMac(NeewerLightConstant.BleCommand.powerNewTag, _macAddress!,
+        guard let mac = _macAddress else { return Data() }
+        let bArr1: [UInt8] = composeSingleCommandWithMac(NeewerLightConstant.BleCommand.powerNewTag, mac,
                                                          NeewerLightConstant.BleCommand.powerNewSubTag,
                                                          turnOn ? NeewerLightConstant.BleCommand.powerNewOnSubTag : NeewerLightConstant.BleCommand.powerNewOffSubTag)
         let data = NSData(bytes: bArr1, length: bArr1.count) as Data
