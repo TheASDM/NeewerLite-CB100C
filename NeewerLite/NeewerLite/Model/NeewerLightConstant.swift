@@ -204,6 +204,8 @@ class NeewerLightConstant {
                 return "CB300B"
             case "20220057":
                 return "SL90 Pro"
+            case "20240073":
+                return "SL90 Infinity"
             case "20230021":
                 return "BH-30S RGB"
             case "20230025":
@@ -613,6 +615,8 @@ class NeewerLightConstant {
                     }
                 }
             }
+        } else if nickName.contains("SL90 Infinity") {
+            lightType = 71
         } else if nickName.contains("SL90 Pro") {
             lightType = 34
         } else if nickName.contains("SL90") {
