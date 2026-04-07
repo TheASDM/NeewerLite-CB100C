@@ -2,6 +2,42 @@
     "version": 3,
     "lights": [
         {
+            "type": 1,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
+            "type": 2,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
             "type": 3,
             "image": "https://github.com/keefo/NeewerLite/blob/main/Database/light_images/rgb660-pro.png?raw=true",
             "link": "https://ca.neewer.com/products/neewer-cri-97-50w-660-prorgb-led-light-66600136",
@@ -43,6 +79,24 @@
                 "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
                 "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
                 "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
+            }
+        },
+        {
+            "type": 6,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -120,6 +174,24 @@
             }
         },
         {
+            "type": 13,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
             "type": 14,
             "image": "",
             "link": "",
@@ -157,6 +229,25 @@
             "supportMusic": true,
             "support17FX": true,
             "support9FX": false,
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
+            }
+        },
+        {
+            "type": 17,
+            "image": "",
+            "link": "",
+            "supportRGB": true,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": true,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
             "commandPatterns": {
                 "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
                 "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
@@ -238,7 +329,45 @@
             },
             "commandPatterns": {
                 "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
-                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} {gm:uint8:range(0,100)} 0x00 0x00 {checksum}"
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} {gm:uint8:range(0,100)} 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
+            }
+        },
+        {
+            "type": 23,
+            "image": "",
+            "link": "",
+            "supportRGB": true,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": true,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
+            }
+        },
+        {
+            "type": 24,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -253,6 +382,11 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} {gm:int8:range(-50,50)} 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -267,6 +401,11 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} {gm:int8:range(-50,50)} 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -281,6 +420,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -295,6 +438,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -309,6 +456,11 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -323,6 +475,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -375,7 +531,8 @@
                 "max": 70
             },
             "commandPatterns": {
-                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}"
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -390,6 +547,48 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} {gm:int8:range(-50,50)} 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
+            }
+        },
+        {
+            "type": 35,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
+            "type": 36,
+            "image": "",
+            "link": "",
+            "supportRGB": true,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": true,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -404,6 +603,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -418,6 +621,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -450,56 +657,56 @@
                     "name": "Modeling lights",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x22 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x22 0x32 {checksum}"
                 },
                 {
                     "id": 4,
                     "name": "White halogen lights",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x2B 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x2B 0x32 {checksum}"
                 },
                 {
                     "id": 5,
                     "name": "Horizon daylight",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x32 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x32 0x32 {checksum}"
                 },
                 {
                     "id": 6,
                     "name": "Daylight",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x37 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x37 0x32 {checksum}"
                 },
                 {
                     "id": 7,
                     "name": "Dysprosic lamp",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x38 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x38 0x32 {checksum}"
                 },
                 {
                     "id": 8,
                     "name": "HMI6000",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x3C 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x3C 0x32 {checksum}"
                 },
                 {
                     "id": 9,
                     "name": "Xenon short-arc lamp",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x3E 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x3E 0x32 {checksum}"
                 },
                 {
                     "id": 10,
                     "name": "Sunlight",
                     "icon": "",
                     "cmd": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(29,70)} {gm:uint8:range(0,100)} {checksum}",
-                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x41 0x32 {checksum}" 
+                    "defaultCmd": "{cmdtag} {ccttag} {size} 0x32 0x41 0x32 {checksum}"
                 },
                 {
                     "id": 11,
@@ -563,7 +770,13 @@
                     "id": 10,
                     "name": "Cop Car",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x0A {brr:uint8:range(0,100)} {color:uint8:range(0,4)} {speed:uint8:range(1,10)} {checksum}",
-                    "color": ["Red", "Blue", "Red and Blue" ,"White and Blue" ,"Red, Blue, White"]
+                    "color": [
+                        "Red",
+                        "Blue",
+                        "Red and Blue",
+                        "White and Blue",
+                        "Red, Blue, White"
+                    ]
                 },
                 {
                     "id": 11,
@@ -596,14 +809,22 @@
                     "name": "Fireworks",
                     "icon": "fireworks",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x10 {brr:uint8:range(0,100)} {color:uint8:range(0,2)} {speed:uint8:range(1,10)} {sparks:uint8:range(1,10)} {checksum}",
-                    "color": ["Single Color", "Color", "Combined"]
+                    "color": [
+                        "Single Color",
+                        "Color",
+                        "Combined"
+                    ]
                 },
                 {
                     "id": 17,
                     "name": "Party",
                     "icon": "party.popper.fill",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x11 {brr:uint8:range(0,100)} {color:uint8:range(0,2)} {speed:uint8:range(1,10)} {checksum}",
-                    "color": ["Single Color", "Color", "Combined"]
+                    "color": [
+                        "Single Color",
+                        "Color",
+                        "Combined"
+                    ]
                 },
                 {
                     "id": 18,
@@ -677,7 +898,13 @@
                     "id": 10,
                     "name": "Cop Car",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x0A {brr:uint8:range(0,100)} {color:uint8:range(0,4)} {speed:uint8:range(1,10)} {checksum}",
-                    "color": ["Red", "Blue", "Red and Blue" ,"White and Blue" ,"Red, Blue, White"]
+                    "color": [
+                        "Red",
+                        "Blue",
+                        "Red and Blue",
+                        "White and Blue",
+                        "Red, Blue, White"
+                    ]
                 },
                 {
                     "id": 11,
@@ -710,16 +937,42 @@
                     "name": "Fireworks",
                     "icon": "fireworks",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x10 {brr:uint8:range(0,100)} {color:uint8:range(0,2)} {speed:uint8:range(1,10)} {sparks:uint8:range(1,10)} {checksum}",
-                    "color": ["Single Color", "Color", "Combined"]
+                    "color": [
+                        "Single Color",
+                        "Color",
+                        "Combined"
+                    ]
                 },
                 {
                     "id": 17,
                     "name": "Party",
                     "icon": "party.popper.fill",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x11 {brr:uint8:range(0,100)} {color:uint8:range(0,2)} {speed:uint8:range(1,10)} {checksum}",
-                    "color": ["Single Color", "Color", "Combined"]
+                    "color": [
+                        "Single Color",
+                        "Color",
+                        "Combined"
+                    ]
                 }
             ]
+        },
+        {
+            "type": 41,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
+            }
         },
         {
             "type": 42,
@@ -749,6 +1002,11 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -763,6 +1021,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -777,6 +1039,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -791,6 +1057,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -805,6 +1075,29 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
+            "type": 48,
+            "image": "",
+            "link": "",
+            "supportRGB": true,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": true,
+            "support9FX": false,
+            "cctRange": {
+                "min": 32,
+                "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -958,7 +1251,13 @@
                     "id": 10,
                     "name": "Cop Car",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x0A {brr:uint8:range(0,100)} {color:uint8:range(0,4)} {speed:uint8:range(1,10)} {checksum}",
-                    "color": ["Red", "Blue", "Red and Blue", "White and Blue", "Red, Blue, White"]
+                    "color": [
+                        "Red",
+                        "Blue",
+                        "Red and Blue",
+                        "White and Blue",
+                        "Red, Blue, White"
+                    ]
                 },
                 {
                     "id": 11,
@@ -991,14 +1290,22 @@
                     "name": "Fireworks",
                     "icon": "fireworks",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x10 {brr:uint8:range(0,100)} {color:uint8:range(0,2)} {speed:uint8:range(1,10)} {sparks:uint8:range(1,10)} {checksum}",
-                    "color": ["Single Color", "Color", "Combined"]
+                    "color": [
+                        "Single Color",
+                        "Color",
+                        "Combined"
+                    ]
                 },
                 {
                     "id": 17,
                     "name": "Party",
                     "icon": "party.popper.fill",
                     "cmd": "{cmdtag} {fxsubtag} {size} 0x11 {brr:uint8:range(0,100)} {color:uint8:range(0,2)} {speed:uint8:range(1,10)} {checksum}",
-                    "color": ["Single Color", "Color", "Combined"]
+                    "color": [
+                        "Single Color",
+                        "Color",
+                        "Combined"
+                    ]
                 }
             ]
         },
@@ -1014,6 +1321,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1028,6 +1339,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1042,6 +1357,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1056,6 +1375,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1070,6 +1393,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1084,6 +1411,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1098,6 +1429,11 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -1112,6 +1448,11 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -1126,6 +1467,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1159,6 +1504,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1173,6 +1522,10 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1206,6 +1559,65 @@
             "cctRange": {
                 "min": 32,
                 "max": 56
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(32,56)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
+            "type": 64,
+            "image": "",
+            "link": "",
+            "supportRGB": true,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": true,
+            "support9FX": false,
+            "cctRange": {
+                "min": 27,
+                "max": 65
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
+            }
+        },
+        {
+            "type": 65,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 27,
+                "max": 65
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
+            "type": 66,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 27,
+                "max": 65
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} 0x32 0x00 0x00 {checksum}"
             }
         },
         {
@@ -1227,6 +1639,24 @@
             }
         },
         {
+            "type": 68,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 27,
+                "max": 65
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
             "type": 69,
             "image": "https://github.com/keefo/NeewerLite/blob/main/Database/light_images/tl21c.png?raw=true",
             "link": "https://neewer.com/products/neewer-tl21c-rgb-magnetic-light-wand-with-app-control-66604585",
@@ -1238,6 +1668,11 @@
             "cctRange": {
                 "min": 25,
                 "max": 85
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(25,85)} 0x32 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
             }
         },
         {
@@ -1247,6 +1682,61 @@
             "supportRGB": false,
             "supportCCTGM": false,
             "supportMusic": true,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 27,
+                "max": 65
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
+            "type": 81,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
+            "support17FX": false,
+            "support9FX": false,
+            "cctRange": {
+                "min": 27,
+                "max": 65
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} 0x32 0x00 0x00 {checksum}"
+            }
+        },
+        {
+            "type": 83,
+            "image": "",
+            "link": "",
+            "supportRGB": true,
+            "supportCCTGM": true,
+            "supportMusic": false,
+            "support17FX": true,
+            "support9FX": false,
+            "cctRange": {
+                "min": 27,
+                "max": 65
+            },
+            "commandPatterns": {
+                "power": "{cmdtag} {powertag} {size} {state:uint8:enum(1=on,2=off)} {checksum}",
+                "cct": "{cmdtag} {ccttag} {size} {brr:uint8:range(0,100)} {cct:uint8:range(27,65)} {gm:int8:range(-50,50)} 0x00 0x00 {checksum}",
+                "hsi": "{cmdtag} {hsitag} {size} {hue:uint16_le:range(0,360)} {sat:uint8:range(0,100)} {brr:uint8:range(0,100)} {checksum}"
+            }
+        },
+        {
+            "type": 86,
+            "image": "",
+            "link": "",
+            "supportRGB": false,
+            "supportCCTGM": false,
+            "supportMusic": false,
             "support17FX": false,
             "support9FX": false,
             "cctRange": {
