@@ -4,227 +4,161 @@
 </a>
 </p>
 
-<h1 align="center">NeewerLite</h1>
+<h1 align="center">NeewerLite-CB100C</h1>
 
-# About The Project
+# About This Fork
 
-[![CI](https://github.com/keefo/NeewerLite/actions/workflows/ci.yml/badge.svg)](https://github.com/keefo/NeewerLite/actions/workflows/ci.yml)
+This is a fork of [keefo/NeewerLite](https://github.com/keefo/NeewerLite), an unofficial macOS app for controlling Neewer LED lights via Bluetooth. This fork focuses on bug fixes, CB100C support, a modernized SwiftUI interface, and a fully reworked Stream Deck+ plugin.
 
-NeewerLite is a unofficial macOS app designed for controlling Neewer LED lights.
+**Original author:** [Xu Lian (keefo)](https://github.com/keefo) — all credit for the original NeewerLite app, BLE protocol reverse-engineering, and command pattern system goes to him. Please consider [sponsoring his work](https://github.com/sponsors/keefo).
 
-While [Neewer](https://neewer.com/) provides official Android and [iOS app](https://apps.apple.com/us/app/neewer/id1455948340) for controlling their high-CRI LED lights via Bluetooth, they do not offer a means of control from a PC or Mac.
+# What's Changed
 
-This project aims to fill that gap by creating a macOS app that allows you to control your Bluetooth-enabled Neewer LED lights from your Mac. With NeewerLite, you can even integrate light control into your [Elgato Stream Deck](https://www.elgato.com/en/gaming/stream-deck) or shortcuts for better experince.
+## Bug Fixes (13 bugs fixed)
 
-Here is a video I made to demo the scene:
+- **`sendSceneCommand` overwrite bug** — A duplicate `getSceneCommand()` call ran unconditionally after the if/else block, overwriting whatever was computed
+- **`fxPatterns` ignored** — Lights with `support17FX: true` AND custom `fxPatterns` in the database (like the CB100C) would use hardcoded FX instead of the database patterns
+- **Dead `sendKeepAlive()`** — An early `return` on line 432 made the entire keep-alive function unreachable, so BLE connections would drop silently
+- **Wrong saturation formula** — RGB-to-HSV conversion used `dVal / minV` instead of `dVal / maxV`, producing incorrect colors in HSI mode
+- **Inverted slider bounds** — `NLSlider` min/max `didSet` checks were backwards, clamping values in the wrong direction
+- **Upper-bound slider bug** — `notifyUpperValueChange()` reported `currentValue` instead of `currentUpperValue`, breaking FX range sliders
+- **TL40-2 type assignment** — `lightType = 86` was immediately overwritten by `lightType = 0` due to missing `else`
+- **Release build database loading** — Bundled `lights.json` only loaded in `#if DEBUG`, so Release builds had no light definitions
+- **Force unwraps** — Replaced 3 crash-prone `!` unwraps with safe alternatives (`Int(val)!`, `_macAddress!`, `try!`)
+- **`ligthType` typo** — Renamed misspelled lazy var throughout codebase
+- **FX endpoint bug** — Server.swift checked `fx9 > 0` instead of `fx17 > 0` for 17-channel lights
 
-<p>
-<a align="left" href="https://youtu.be/pbNi6HZTDEc">
-	<img src="https://j.gifs.com/3Qz2Ox.gif" />
-</a>
-<img src="screenshot.png" width="300px" />
-</p>
+## Database Fixes (lights.json)
 
-# Features
+- **Type 49 (CB100C)** — Added missing `0x00 0x00` padding before checksum in all 11 sourcePattern `cmd` and `defaultCmd` strings
+- **Type 40 & 42** — Fixed duplicate FX opcodes: CCT flash `0x05` -> `0x06`, TV screen `0x0E` -> `0x0F`
+- **Typo** — Fixed "Signle Color" -> "Single Color" in FX pattern names
 
-- Power On/Off control
-- Brightness control
-- Correlated color temperature control
-- RGB color control
-- Scene control
-- Script support
-- Sync RGB lights with music
+## SwiftUI Rewrite
 
-# How to install pre-build app
+The entire UI has been rewritten in SwiftUI (macOS 14+), replacing ~6,000 lines of AppKit/XIB code with ~1,300 lines of declarative SwiftUI:
 
-1. Download the latest dmg file from release page, double click the dmg to open it.
-2. Then drag .app file in dmg to your application folder.
-3. Go to application folder to double the app you just dropped from dmg.
-4. once the app is running, it should has a icon in the status bar on the right top of you screen.
+- **`MainView`** — Scrollable grid of light cards with header, light count, and scan button with countdown timer
+- **`LightCardView`** — Card per light with name, power toggle, and segmented mode picker (CCT / HSI / Source / FX)
+- **`CCTModeView`** — Brightness, color temperature, and green-magenta sliders
+- **`HSIModeView`** — Interactive color wheel with brightness slider
+- **`FXModeView`** — Effect picker with dynamic sliders based on each effect's parameters (speed, brightness, CCT, GM, hue, saturation)
+- **`SourceModeView`** — Light source picker with parameter sliders
+- **`GradientSlider`** — Custom slider with 7 gradient presets (brightness, CCT, GM, hue, saturation, speed, spark) featuring draggable knob and discrete block mode
+- **`ColorWheelView`** — HSI color wheel with drag-to-select
+- **`RenameSheet`** — SwiftUI rename dialog via right-click context menu
+- **`LightViewModel`** — `@Observable` bridge from the existing `Observable<T>` BLE model to SwiftUI
+- **`AppState`** — Singleton light collection with discovered/connected light management
 
-## Script Usage
+The BLE communication layer (`NeewerLight.swift`, `CommandPatternParser.swift`, etc.) is completely unchanged.
 
-Open the app and let it scans all Neewer lights through Bluetooth. Once it finds lights. Then you could use command to switch On/Off lights.
+## Stream Deck+ Plugin Overhaul
 
-Turn on all lights:
+6 new actions added to the Stream Deck plugin, designed for the Stream Deck+ (4 dials + 8 keys):
+
+### New Dial Actions
+- **GM (Green-Magenta)** — Dial adjusts GM tint from -50 to +50, press toggles power
+- **FX Speed** — Dial adjusts effect speed 1-10, press toggles power
+
+### New Key Actions
+- **CCT Mode** — Switch to CCT mode, shows checkmark when active
+- **HSI Mode** — Switch to HSI color mode, shows checkmark when active
+- **FX Cycle** — Press to cycle through effects, shows current effect name on key
+- **Source Cycle** — Press to cycle through light sources, shows current source name
+
+### New Server Endpoints
+- `POST /gm` — Green-magenta control
+- `POST /mode` — Mode switching (CCT/HSI/SCE)
+- `POST /fxnext` — Cycle through FX effects
+- `POST /fxspeed` — Adjust FX speed
+- `POST /source` — Cycle through light sources
+- Enhanced `GET /listLights` — Now returns mode, GM, hue, saturation, FX name, counts
+
+### Existing Action Fixes
+- Fixed HUE encoder range from 0-256 to 0-360
+- Fixed FX endpoint checking wrong field for 17-channel lights
+- Reduced heartbeat polling from 1s to 3s
+- Added 100ms delay between mode switch and command to prevent race conditions
+
+# What Still Needs Work
+
+- [ ] **Extract BLE from AppDelegate** — CoreBluetooth management is still in `AppDelegate.swift` (~1,400 lines). Should be moved to a standalone `BLEManager` class
+- [ ] **Delete old AppKit files** — The old view files (`CollectionViewItem.swift`, `NLSlider.swift`, `ColorWheel.swift`, etc.) still compile but are never shown. ~3,000 lines of dead code
+- [ ] **SwiftUI Log Monitor** — Replace `LogMonitorViewController.swift` with a SwiftUI log viewer
+- [ ] **SwiftUI Pattern Editor** — Replace `PatternEditorPanel.swift` with SwiftUI text editor with syntax highlighting
+- [ ] **Audio Spectrogram** — Port `AudioSpectrogramView` to SwiftUI Canvas with `TimelineView` animation
+- [ ] **Test more lights** — Only tested with CB100C and CB60. Other Neewer models may need database entries or command pattern adjustments
+- [ ] **Stream Deck plugin packaging** — Need Elgato CLI tools for proper `.streamDeckPlugin` packaging. Currently installed by copying folder manually
+
+# Requirements
+
+- macOS 14.0 (Sonoma) or later
+- Xcode 15+ to build
+- Bluetooth-enabled Neewer LED light
+
+# How to Build
+
+1. Clone this repo
+2. Open `NeewerLite/NeewerLite.xcodeproj` in Xcode
+3. Select the **NeewerLite** scheme, set destination to **My Mac**
+4. Build & Run (Cmd+R)
+5. The app appears in your menu bar (not the Dock)
+
+## Stream Deck Plugin
 
 ```bash
+cd NeewerLiteStreamDeck/neewerlite
+npm install
+npm run build
+```
+
+Then copy the plugin to Stream Deck:
+```bash
+cp -r com.beyondcow.neewerlite.sdPlugin ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/
+```
+
+Restart the Stream Deck app to load the new actions.
+
+# Script Commands
+
+The app supports URL scheme commands for automation:
+
+```bash
+# Power
 open "neewerlite://turnOnLight"
-```
-
-Turn off all lights:
-
-```bash
 open "neewerlite://turnOffLight"
-```
-
-Toggle all lights:
-
-```bash
 open "neewerlite://toggleLight"
-```
 
-Scan all lights:
-
-```bash
+# Scan
 open "neewerlite://scanLight"
-```
 
-Set lights CCT:
-
-```bash
+# CCT mode
 open "neewerlite://setLightCCT?CCT=3200&Brightness=100"
-```
-
-Set lights CCT+GM:
-
-```bash
 open "neewerlite://setLightCCT?CCT=3200&GM=-50&Brightness=100"
-```
 
-Most of light model support CCT range 3200K to 5600K, Some lights support long CCT range 3200K to 8500K. And some newer model of light support GM.
-
-Set lights Hue and Saturation and Brightness:
-
-```bash
+# HSI mode
 open "neewerlite://setLightHSI?RGB=ff00ff&Saturation=100&Brightness=100"
-```
-
-```bash
 open "neewerlite://setLightHSI?HUE=360&Saturation=100&Brightness=100"
-```
 
-Set lights to scene:
-
-```bash
+# Scenes
 open "neewerlite://setLightScene?Scene=SquadCar"
-```
-
-```bash
 open "neewerlite://setLightScene?SceneId=1&Brightness=100"
+
+# Target specific light by name
+open "neewerlite://turnOnLight?light=MyLight"
 ```
-
-Scene Names: SquadCar, Ambulance, FireEngine, Fireworks, Party, CandleLight, Lighting, Paparazzi, Screen
-
-Not all model follow these scene names. If your light support more scenes, you can use SceneId to switch.
-
-SceneId Range from 1 ~ 17 depends on light type.
-
-Turn on light by name:
-
-```bash
-open "neewerlite://turnOnLight?light=left"
-```
-
-The 'left' is the name I give one of my light. You could change your light's name in the app and use it in this command.
-
-Another way to test these commands is to copy a command(the string in the double quote) into your browser address bar, and press enter.
-
-## Using the Elgato Stream Deck
-
-You can control NeewerLite from your Stream Deck in two different ways:
-
-1. **Install the built-in Stream Deck plugin**
-
-   - NeewerLite will prompt you to install the plugin automatically.
-   - Click **Install** when prompted, then open the Stream Deck app—our plugin will appear in your actions list.
-
-<p>
-<img src="Docs/StreamDeck_dial_ui.png" width="300px" />
-<img src="Docs/StreamDeck_dial.jpg" width="300px" />
-</p>
-
-2. **Bind a custom script to a Stream Deck button**
-   - Write a simple shell, Python, or Node.js script that sends commands to NeewerLite’s open schema.
-   - In the Stream Deck software, use the **System → Open** action (or **Run** action) to point at your script.
-   - Assign your button an icon and label, then you’re ready to go!
-   - Read this [Integrate with Elgato Stream Deck](./Docs/Integrate-with-streamdeck.md) for details.
-
-## How to use script to integrate with macOS Shortcuts?
-
-Read this [Integrate with Shortcuts](./Docs/Integrate-with-shortcut.md)
-
-## Voice Control Interaction
-
-You could integrate these commands into Voice Control.
-
-Open “System Preferences” -> “Accessibility” -> “Voice Control” -> “Commands”, Click the “+” button to create a new command, give a name to your new command such as “Meow” and choose “Any Application” then choose perform “Open URL”. Type in “neewerlite://toggleLight” for example.
-
-Now, when you say “Meow” voice control will switch on/off your LED lights.
 
 # Tested Lights
 
-- [Neewer CB60 RGB Light](https://neewer.com/products/neewer-led-video-light-66601007)
-- [Neewer 660 RGB Light](https://neewer.com/products/neewer-led-light-10096807)
-- [Neewer 480 RGB Light](https://neewer.com/collections/rgb-led-panel-light/products/neewer-led-light-10096594)
-- [Neewer RGB176 Light](https://neewer.com/products/neewer-rgb176-video-light-with-app-control-10098961)
-- [Neewer RGB 530 PRO Light](https://www.amazon.ca/360%C2%B0Full-Streaming-Broadcasting-Conference-Photography/dp/B08MVTJTVQ)
-- [Neewer RGB1-A Magnetic Handheld Light Stick](https://ca.neewer.com/products/neewer-cri98-rgb1-handheld-led-video-light-66601508)
-- [Neewer SL90 Pro Aluminum Alloy RGB Panel Video Light](https://ca.neewer.com/products/neewer-sl90-12w-on-camera-rgb-panel-video-light-66600927)
-- [Neewer BH-30S RGB LED Tube Light Wand](https://ca.neewer.com/products/neewer-bh30s-rgb-led-tube-light-wand-66602411)
+- Neewer CB100C (type 49) — fully tested, all modes working
+- Neewer CB60 RGB (type 22) — tested basic functionality
 
-# TO DO LIST
+# Credits
 
-If you find a way to implement these features, feel free to create a pull request.
-
-- [ ] Test more Neewer LED lights
-- [ ] Add support for other Neewer LED lights
-- [ ] Advanced scene management
-
-# How to add support for a new light?
-
-If you are unable to find your Neewer light using NeewerLite, you can easily add support for it by following these steps:
-
-1. Find your light bluetooth raw name.
-2. Find light type value from `NeewerLightConstant.getLightType` function from bluetooth raw name.
-3. Add new light type to the `Database/lights.json` file.
-
-Here is an example of adding [neewer-tl21c-rgb-magnetic-light-wand](https://neewer.com/products/neewer-tl21c-rgb-magnetic-light-wand-with-app-control-66604585)
-
-The bluetooth raw name is should contain `tl21c` by checking `NeewerLightConstant.getLightType` function, it converts to light type 69.
-
-Add this into database json file. Make sure it reflects what this LED light supports including, cct range, rgb support and scene effect support.
-
-```
-{
-   "type": 69,
-   "image": "https://github.com/keefo/NeewerLite/blob/main/Database/light_images/tl21c.png?raw=true",
-   "link": "https://neewer.com/products/neewer-tl21c-rgb-magnetic-light-wand-with-app-control-66604585",
-   "supportRGB": true,
-   "supportCCTGM": false,
-   "supportMusic": true,
-   "support17FX": true,
-   "support9FX": false,
-   "cctRange": {
-         "min": 25,
-         "max": 85
-   }
-}
-```
-
-# It does not recognize my RGB light as RGB light, what to do?
-
-If you are have a Neewer RGB light but, the app does not show it as RGB light, then you could follow these steps:
-
-1. Use a Bluetooth app to find the raw name of your light.
-2. Check `Database/lights.json` file to find the light type section.
-3. Check if `supportRGB` value is true.
-4. If not, you need to rise a PR to update this value. Once PR is merged, app will get new database from github.
+- **Original NeewerLite app** — [Xu Lian (keefo)](https://github.com/keefo/NeewerLite)
+- **This fork** — [TheASDM](https://github.com/TheASDM)
+- **Bug fixes, SwiftUI rewrite, and Stream Deck overhaul** — Built with [Claude Code](https://claude.ai/claude-code)
 
 # License
 
-Follow NeewerLite, the code and examples of this project is released under MIT License.
-
-# Donations
-
-If you would like to support me, donations are very welcome.
-
-You can go fund this project through my [sponsors](https://github.com/sponsors/keefo) page.
-
-or
-
-You can send bitcoin to this address:
-
-```
-1A4mwftoNpuNCLbS8dHpk9XHrcyvtExrYF
-```
+MIT License — same as the original NeewerLite project. See [LICENSE](LICENSE) for details.
