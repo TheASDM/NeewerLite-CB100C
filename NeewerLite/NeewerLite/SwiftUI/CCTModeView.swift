@@ -49,6 +49,7 @@ struct CCTModeView: View {
     }
 
     private func sendCCT() {
+        print("!!! sendCCT brr=\(brr) cct=\(cctVal) gm=\(gmVal) device=\(light.device.rawName)")
         light.setCCT(brr: CGFloat(brr), cct: CGFloat(cctVal), gm: CGFloat(gmVal))
     }
 }

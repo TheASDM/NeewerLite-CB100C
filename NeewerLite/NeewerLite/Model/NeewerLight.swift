@@ -573,7 +573,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
 
         // 1. MAC-embedded command for newer lights (RGB1200 III, BH-30S, SL90 Infinity)
         if supportNewPowerCommand {
-            cmd = getNewCCTLightCommand(mac: _macAddress ?? "", brightness: brr, cct: cct, gmm: gmm)
+            cmd = getNewCCTLightCommand(mac: resolveMAC(), brightness: brr, cct: cct, gmm: gmm)
             lightMode = .CCTMode
             guard let characteristic = deviceCtlCharacteristic else { return }
             write(data: cmd, to: characteristic)
@@ -625,7 +625,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
 
         // 1. MAC-embedded command for newer lights
         if supportNewHSICommand {
-            cmd = getNewHSILightCommand(mac: _macAddress ?? "", brightness: brr100, hue: hue, hue360: hue360, satruation: sat)
+            cmd = getNewHSILightCommand(mac: resolveMAC(), brightness: brr100, hue: hue, hue360: hue360, satruation: sat)
             lightMode = .HSIMode
             guard let characteristic = deviceCtlCharacteristic else { return }
             write(data: cmd, to: characteristic)
@@ -858,6 +858,18 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
         return appendCheckSum(bArr)
     }
 
+    private func resolveMAC() -> String {
+        if let mac = _macAddress, !mac.isEmpty {
+            return mac
+        }
+        // Temporary: hardcoded MACs for known lights that need MAC-embedded commands
+        if rawName.contains("20240014") {
+            _macAddress = "C8:A0:6A:21:42:81"
+            return _macAddress!
+        }
+        return ""
+    }
+
     private func getNewCCTLightCommand(mac: String, brightness brr: CGFloat, cct: CGFloat, gmm: CGFloat) -> Data {
         let newBrrValue = Int(brr).clamped(to: 0...100)
         let cctRange = CCTRange()
@@ -879,13 +891,7 @@ class NeewerLight: NSObject, ObservableNeewerLightProtocol {
          CMD  TAG  SIZE       MAC                     SUB_TAG  PowerOff    (checksum)
          78   8D   08         (F7 AC 16 F1 58 96)     81       02          28
          */
-        var mac = _macAddress ?? ""
-        // Temporary: if MAC is empty and this is the RGB1200(III), use known MAC for testing
-        if mac.isEmpty && rawName.contains("20240014") {
-            mac = "C8:A0:6A:21:42:81"
-            _macAddress = mac
-            print("!!! Using hardcoded MAC for RGB1200: \(mac)")
-        }
+        let mac = resolveMAC()
         let bArr1: [UInt8] = composeSingleCommandWithMac(NeewerLightConstant.BleCommand.powerNewTag, mac,
                                                          NeewerLightConstant.BleCommand.powerNewSubTag,
                                                          turnOn ? NeewerLightConstant.BleCommand.powerNewOnSubTag : NeewerLightConstant.BleCommand.powerNewOffSubTag)
