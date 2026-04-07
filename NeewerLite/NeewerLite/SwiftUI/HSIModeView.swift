@@ -8,50 +8,43 @@ struct HSIModeView: View {
     @State private var brr: Double = 50
 
     var body: some View {
-        VStack(spacing: 12) {
-            // Hue
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text("Hue")
-                    Spacer()
-                    Text("\(Int(hueVal))\u{00B0}")
-                        .foregroundStyle(.secondary)
-                        .monospacedDigit()
+        VStack(spacing: 14) {
+            ColorWheelView(
+                hue: $hueVal,
+                saturation: $satVal,
+                onChanged: { h, s in
+                    hueVal = h
+                    satVal = s
+                    sendHSI()
                 }
-                Slider(value: $hueVal, in: 0...360, step: 1)
-            }
+            )
+            .frame(height: 150)
 
-            // Saturation
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text("Saturation")
-                    Spacer()
-                    Text("\(Int(satVal))%")
-                        .foregroundStyle(.secondary)
-                        .monospacedDigit()
-                }
-                Slider(value: $satVal, in: 0...100, step: 1)
-            }
+            GradientSlider(
+                value: $brr,
+                range: 0...100,
+                step: 1,
+                gradient: .brightness,
+                label: "BRR",
+                valueLabel: "\(Int(brr))%"
+            )
 
-            // Brightness
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text("Brightness")
-                    Spacer()
-                    Text("\(Int(brr))%")
-                        .foregroundStyle(.secondary)
-                        .monospacedDigit()
-                }
-                Slider(value: $brr, in: 0...100, step: 1)
+            HStack {
+                Text("H: \(Int(hueVal))\u{00B0}")
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Text("S: \(Int(satVal))%")
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
             }
+            .font(.caption)
         }
         .onAppear {
             hueVal = Double(light.hue)
             satVal = Double(light.saturation)
             brr = Double(light.brightness)
         }
-        .onChange(of: hueVal) { sendHSI() }
-        .onChange(of: satVal) { sendHSI() }
         .onChange(of: brr) { sendHSI() }
     }
 

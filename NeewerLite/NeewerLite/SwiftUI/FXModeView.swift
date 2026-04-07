@@ -28,7 +28,6 @@ struct FXModeView: View {
                 Text("No effects available for this light.")
                     .foregroundStyle(.secondary)
             } else {
-                // FX picker
                 Picker("Effect", selection: $selectedFXIndex) {
                     ForEach(supportedFX.indices, id: \.self) { index in
                         Text(supportedFX[index].name).tag(index)
@@ -36,40 +35,70 @@ struct FXModeView: View {
                 }
 
                 if let fx = selectedFX {
-                    // Speed
                     if fx.needSpeed {
-                        sliderRow(label: "Speed", value: $speed, range: 1...10, step: 1, suffix: "")
-                    }
-
-                    // Brightness
-                    if fx.needBRR {
-                        sliderRow(label: "Brightness", value: $brr, range: 0...100, step: 1, suffix: "%")
-                    }
-
-                    // CCT
-                    if fx.needCCT {
-                        sliderRow(
-                            label: "Temperature",
-                            value: $cctVal,
-                            range: Double(light.cctRange.min)...Double(light.cctRange.max),
+                        GradientSlider(
+                            value: $speed,
+                            range: 1...10,
                             step: 1,
-                            suffix: "00K"
+                            gradient: .speed,
+                            label: "SPD",
+                            valueLabel: "\(Int(speed))"
                         )
                     }
 
-                    // GM
+                    if fx.needBRR {
+                        GradientSlider(
+                            value: $brr,
+                            range: 0...100,
+                            step: 1,
+                            gradient: .brightness,
+                            label: "BRR",
+                            valueLabel: "\(Int(brr))%"
+                        )
+                    }
+
+                    if fx.needCCT {
+                        GradientSlider(
+                            value: $cctVal,
+                            range: Double(light.cctRange.min)...Double(light.cctRange.max),
+                            step: 1,
+                            gradient: .cct,
+                            label: "CCT",
+                            valueLabel: "\(Int(cctVal))00K"
+                        )
+                    }
+
                     if fx.needGM {
-                        gmSliderRow()
+                        GradientSlider(
+                            value: $gmVal,
+                            range: -50...50,
+                            step: 1,
+                            gradient: .gm,
+                            label: "GM",
+                            valueLabel: gmVal >= 0 ? "+\(Int(gmVal))" : "\(Int(gmVal))"
+                        )
                     }
 
-                    // Hue
                     if fx.needHUE {
-                        sliderRow(label: "Hue", value: $hueVal, range: 0...360, step: 1, suffix: "\u{00B0}")
+                        GradientSlider(
+                            value: $hueVal,
+                            range: 0...360,
+                            step: 1,
+                            gradient: .hue,
+                            label: "HUE",
+                            valueLabel: "\(Int(hueVal))\u{00B0}"
+                        )
                     }
 
-                    // Saturation
                     if fx.needSAT {
-                        sliderRow(label: "Saturation", value: $satVal, range: 0...100, step: 1, suffix: "%")
+                        GradientSlider(
+                            value: $satVal,
+                            range: 0...100,
+                            step: 1,
+                            gradient: .saturation,
+                            label: "SAT",
+                            valueLabel: "\(Int(satVal))%"
+                        )
                     }
                 }
             }
@@ -89,36 +118,6 @@ struct FXModeView: View {
         .onChange(of: satVal) { sendFX() }
     }
 
-    // MARK: - Slider Helpers
-
-    private func sliderRow(label: String, value: Binding<Double>, range: ClosedRange<Double>, step: Double, suffix: String) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text(label)
-                Spacer()
-                Text("\(Int(value.wrappedValue))\(suffix)")
-                    .foregroundStyle(.secondary)
-                    .monospacedDigit()
-            }
-            Slider(value: value, in: range, step: step)
-        }
-    }
-
-    private func gmSliderRow() -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text("GM")
-                Spacer()
-                Text(gmVal >= 0 ? "+\(Int(gmVal))" : "\(Int(gmVal))")
-                    .foregroundStyle(.secondary)
-                    .monospacedDigit()
-            }
-            Slider(value: $gmVal, in: -50...50, step: 1)
-        }
-    }
-
-    // MARK: - Sync & Send
-
     private func syncFromFX() {
         guard let fx = selectedFX else { return }
         if fx.needSpeed { speed = Double(fx.speedValue) }
@@ -130,7 +129,7 @@ struct FXModeView: View {
     }
 
     private func sendFX() {
-        guard var fx = selectedFX else { return }
+        guard let fx = selectedFX else { return }
         if fx.needSpeed { fx.featureValues["speed"] = CGFloat(speed) }
         if fx.needBRR { fx.featureValues["brr"] = CGFloat(brr) }
         if fx.needCCT { fx.featureValues["cct"] = CGFloat(cctVal) }

@@ -61,6 +61,9 @@
 		A7AA000200000000AABB0006 /* LightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AA000100000000AABB0006 /* LightViewModel.swift */; };
 		A7AA000200000000AABB0007 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AA000100000000AABB0007 /* MainView.swift */; };
 		A7AA000200000000AABB0008 /* SourceModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AA000100000000AABB0008 /* SourceModeView.swift */; };
+		A7AA000200000000AABB0009 /* GradientSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AA000100000000AABB0009 /* GradientSlider.swift */; };
+		A7AA000200000000AABB000A /* ColorWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AA000100000000AABB000A /* ColorWheelView.swift */; };
+		A7AA000200000000AABB000B /* RenameSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AA000100000000AABB000B /* RenameSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +132,9 @@
 		A7AA000100000000AABB0006 /* LightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightViewModel.swift; sourceTree = "<group>"; };
 		A7AA000100000000AABB0007 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A7AA000100000000AABB0008 /* SourceModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceModeView.swift; sourceTree = "<group>"; };
+		A7AA000100000000AABB0009 /* GradientSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientSlider.swift; sourceTree = "<group>"; };
+		A7AA000100000000AABB000A /* ColorWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelView.swift; sourceTree = "<group>"; };
+		A7AA000100000000AABB000B /* RenameSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +306,9 @@
 				A7AA000100000000AABB0006 /* LightViewModel.swift */,
 				A7AA000100000000AABB0007 /* MainView.swift */,
 				A7AA000100000000AABB0008 /* SourceModeView.swift */,
+				A7AA000100000000AABB0009 /* GradientSlider.swift */,
+				A7AA000100000000AABB000A /* ColorWheelView.swift */,
+				A7AA000100000000AABB000B /* RenameSheet.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -479,6 +488,9 @@
 				A7AA000200000000AABB0006 /* LightViewModel.swift in Sources */,
 				A7AA000200000000AABB0007 /* MainView.swift in Sources */,
 				A7AA000200000000AABB0008 /* SourceModeView.swift in Sources */,
+				A7AA000200000000AABB0009 /* GradientSlider.swift in Sources */,
+				A7AA000200000000AABB000A /* ColorWheelView.swift in Sources */,
+				A7AA000200000000AABB000B /* RenameSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

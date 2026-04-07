@@ -3,6 +3,7 @@ import SwiftUI
 struct LightCardView: View {
     var light: LightViewModel
     @State private var selectedTab: String = "cct"
+    @State private var showRename: Bool = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -78,8 +79,15 @@ struct LightCardView: View {
             case .SRCMode: selectedTab = "source"
             }
         }
+        .sheet(isPresented: $showRename) {
+            RenameSheet(
+                isPresented: $showRename,
+                currentName: light.displayName,
+                onRename: { light.rename($0) }
+            )
+        }
         .contextMenu {
-            Button("Rename...") { /* TODO: rename sheet */ }
+            Button("Rename...") { showRename = true }
             if let link = light.device.productLink {
                 Button("Product Page") {
                     if let url = URL(string: link) {

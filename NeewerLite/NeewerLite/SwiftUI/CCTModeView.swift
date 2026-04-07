@@ -8,47 +8,34 @@ struct CCTModeView: View {
     @State private var gmVal: Double = 0
 
     var body: some View {
-        VStack(spacing: 12) {
-            // Brightness
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text("Brightness")
-                    Spacer()
-                    Text("\(Int(brr))%")
-                        .foregroundStyle(.secondary)
-                        .monospacedDigit()
-                }
-                Slider(value: $brr, in: 0...100, step: 1)
-            }
+        VStack(spacing: 14) {
+            GradientSlider(
+                value: $brr,
+                range: 0...100,
+                step: 1,
+                gradient: .brightness,
+                label: "BRR",
+                valueLabel: "\(Int(brr))%"
+            )
 
-            // CCT
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text("Temperature")
-                    Spacer()
-                    Text("\(Int(cctVal))00K")
-                        .foregroundStyle(.secondary)
-                        .monospacedDigit()
-                }
-                Slider(
-                    value: $cctVal,
-                    in: Double(light.cctRange.min)...Double(light.cctRange.max),
-                    step: 1
-                )
-            }
+            GradientSlider(
+                value: $cctVal,
+                range: Double(light.cctRange.min)...Double(light.cctRange.max),
+                step: 1,
+                gradient: .cct,
+                label: "CCT",
+                valueLabel: "\(Int(cctVal))00K"
+            )
 
-            // GM (only if supported)
             if light.supportGM {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        Text("GM")
-                        Spacer()
-                        Text(gmVal >= 0 ? "+\(Int(gmVal))" : "\(Int(gmVal))")
-                            .foregroundStyle(.secondary)
-                            .monospacedDigit()
-                    }
-                    Slider(value: $gmVal, in: -50...50, step: 1)
-                }
+                GradientSlider(
+                    value: $gmVal,
+                    range: -50...50,
+                    step: 1,
+                    gradient: .gm,
+                    label: "GM",
+                    valueLabel: gmVal >= 0 ? "+\(Int(gmVal))" : "\(Int(gmVal))"
+                )
             }
         }
         .onAppear {
